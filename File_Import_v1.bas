@@ -8,7 +8,7 @@ Form.Show
 End Sub
 
 Sub lstToCollection(lst As MSForms.ListBox, col As Collection)
-'// List BoxÀÇ ¸ñ·ÏÀ» Collection °³Ã¼·Î º¯È¯
+'// List Boxì˜ ëª©ë¡ì„ Collection ê°œì²´ë¡œ ë³€í™˜
 Dim i As Integer
     
     For i = 0 To lst.ListCount - 1
@@ -26,7 +26,7 @@ lbl.Caption = strText
 End Sub
 
 
-Sub Listmove(lstOriginal As MSForms.ListBox, lstMove As MSForms.ListBox, Optional All As Boolean = False) '// list°£ Ç×¸ñ ÀÌµ¿ÇÏ´Â Procedure Á¤¸³
+Sub Listmove(lstOriginal As MSForms.ListBox, lstMove As MSForms.ListBox, Optional All As Boolean = False) '// listê°„ í•­ëª© ì´ë™í•˜ëŠ” Procedure ì •ë¦½
 Dim i As Integer
 Dim lstMovecount(), count As Integer
 
@@ -65,7 +65,7 @@ End If
 
 End Sub
 Public Function splice(str, n, sepChar)
-' ¾ð´õ¹Ù·Î ±¸ºÐµÈ Line No.¿¡¼­ °¢Á¾ Á¤º¸¸¦ ºÐ¸®
+' ì–¸ë”ë°”ë¡œ êµ¬ë¶„ëœ Line No.ì—ì„œ ê°ì¢… ì •ë³´ë¥¼ ë¶„ë¦¬
  Dim f As Variant
   f = Split(str, sepChar)
   If n > 0 And n - 1 <= UBound(f) Then
@@ -77,7 +77,7 @@ Public Function splice(str, n, sepChar)
 End Function
 
 Function TextCount(Text, Search As String) As Integer
-   'Text¿¡ µé¾îÀÖ´Â SearchÀÇ °³¼ö
+   'Textì— ë“¤ì–´ìžˆëŠ” Searchì˜ ê°œìˆ˜
    Dim i As Integer
    TextCount = 0
    For i = 1 To Len(Text)
@@ -86,15 +86,15 @@ Function TextCount(Text, Search As String) As Integer
 End Function
 
 Sub WeldPlanMerge(wbLists As Collection, Optional optSet As String = "Default")
-'// °¢ Workbook¸¦ ¿­¸é¼­ Rangeº°·Î º¹»ç/ºÙ¿©³Ö±â ¹Ýº¹
-Dim i As Integer '// Progress Bar Width Á¶Àý¿ë º¯¼ö
+'// ê° Workbookë¥¼ ì—´ë©´ì„œ Rangeë³„ë¡œ ë³µì‚¬/ë¶™ì—¬ë„£ê¸° ë°˜ë³µ
+Dim i As Integer '// Progress Bar Width ì¡°ì ˆìš© ë³€ìˆ˜
 
-Dim no As Integer '// list ¼ö·® Count
+Dim no As Integer '// list ìˆ˜ëŸ‰ Count
 no = wbLists.count
 Dim NoRow As Integer
 Dim strFileName As String
 Dim strDwg As String
-Dim noSep As Integer '// "\" °³¼ö count
+Dim noSep As Integer '// "\" ê°œìˆ˜ count
 Dim wbList As Variant
 Dim wb As Workbook
 Dim wbTemp As Workbook
@@ -103,16 +103,16 @@ startTime = Timer
 Dim finishTime As Single
 
 '// Set wbTemp = Workbooks.Open("****.xlsx", False, False)
-'//range °³Ã¼ ¼±¾ð
+'//range ê°œì²´ ì„ ì–¸
 
-'// °¢ WeldPlan ¿¢¼¿ ÆÄÀÏÀÇ ColumnÀ» Range °³Ã¼·Î ¼±¾ð
+'// ê° WeldPlan ì—‘ì…€ íŒŒì¼ì˜ Columnì„ Range ê°œì²´ë¡œ ì„ ì–¸
 
 
 
 Dim rng As Range '// Range Copy
-Dim c As Range '// ¹Ýº¹¹® Àû¿ë À§ÇÑ Range °³Ã¼ ¼±¾ð
+Dim c As Range '// ë°˜ë³µë¬¸ ì ìš© ìœ„í•œ Range ê°œì²´ ì„ ì–¸
 
-'// ¹üÀ§ ÁöÁ¤¿ë º¯¼ö ¼±¾ð
+'// ë²”ìœ„ ì§€ì •ìš© ë³€ìˆ˜ ì„ ì–¸
 
 Dim endRow As Integer
 
@@ -120,84 +120,50 @@ Dim NoRows As Integer
 
 
 
-'// Directory ÇöÀç·Î º¯°æ
+'// Directory í˜„ìž¬ë¡œ ë³€ê²½
 
-ChDir ThisWorkbook.Path & "\" '//ÇöÀç Directory·Î º¯°æ
+ChDir ThisWorkbook.Path & "\" '//í˜„ìž¬ Directoryë¡œ ë³€ê²½
 
 On Error Resume Next
 Application.ScreenUpdating = False
-Application.StatusBar = "ÁØºñ"
+Application.StatusBar = "ì¤€ë¹„"
 
 If wbLists.count = 0 Then
     Exit Sub
     
 Else
-    If optSet = "Default" Then '// SettingÀÌ "Default" ÀÏ °æ¿ì
+    If optSet = "Default" Then '// Settingì´ "Default" ì¼ ê²½ìš°
         i = 1
         For Each wbList In wbLists
-        '// WorkBook °³Ã¼ Wb¿¡ ÇÒ´ç
+        '// WorkBook ê°œì²´ Wbì— í• ë‹¹
         Set wb = Workbooks.Open(wbList, False, True)
-        noSep = TextCount(wbList, "\") '// directory Seperater °³¼ö Count
+        noSep = TextCount(wbList, "\") '// directory Seperater ê°œìˆ˜ Count
         strFileName = splice(wbList, noSep + 1, "\")
-        Application.StatusBar = strFileName & " - File ¿­±â " & "(" & i & "of" & no & ")"
+        Application.StatusBar = strFileName & " - File ì—´ê¸° " & "(" & i & "of" & no & ")"
         On Error Resume Next
         Application.ScreenUpdating = False
             NoRow = Range("A2").End(xlDown).Row
             NoRows = NoRow - 2 + 1
-            '// Workbook¿¡¼­ °¢ Column º¯¼ö¿¡ ÇÒ´ç
-            Application.StatusBar = strFileName & " - Data ÀÐ±â " & "(" & i & "of" & no & ")"
+            '// Workbookì—ì„œ ê° Column ë³€ìˆ˜ì— í• ë‹¹
+            Application.StatusBar = strFileName & " - Data ì½ê¸° " & "(" & i & "of" & no & ")"
            
-            '//Template ÆÄÀÏ È°¼ºÈ­
+            '//Template íŒŒì¼ í™œì„±í™”
             wbTemp.Activate
-            '// ¹üÀ§ ¼³Á¤
+            '// ë²”ìœ„ ì„¤ì •
             Set rng = wbTemp.Sheets(1).Range(Range("H1048576").End(xlUp).Offset(1, 0), Range("H1048576").End(xlUp).Offset(NoRows, 0))
-            Application.StatusBar = strFileName & " - Data º¹»çÇÏ±â " & "(" & i & "of" & no & ")"
-            '// JOINT º¹»ç
+            Application.StatusBar = strFileName & " - Data ë³µì‚¬í•˜ê¸° " & "(" & i & "of" & no & ")"
+            '// JOINT ë³µì‚¬
             rngJoint.Copy rng
-            '// RAW_MATERIAL º¹»ç
+            '// RAW_MATERIAL ë³µì‚¬
             rngMatl.Copy rng.Offset(0, 1)
-            '// SIZE º¹»ç
-            rngSize.Copy rng.Offset(0, 2)
-            '// SCHEDULE º¹»ç
-            rngSch.Copy rng.Offset(0, 3)
-            '// WELD TYPE º¹»ç
-            rngType.Copy rng.Offset(0, 4)
-            '// SHOP_FIELD º¹»ç
-            rngSF.Copy rng.Offset(0, 5)
-            '// SPOOL_NO º¹»ç
-            rngSpool.Copy rng.Offset(0, 6)
-            '// CON_SPOOL º¹»ç
-            rngConSpool.Copy rng.Offset(0, 7)
-            '// CON_ISONO º¹»ç
-            rngConIso.Copy rng.Offset(0, 8)
-            '// SPEC º¹»ç
-            rngSpec.Copy rng.Offset(0, -1)
-            '// CON_ISONO¹Ýº¹¹® Àû¿ë
-            For Each c In rng.Offset(0, 8)
-            c.Value = splice(c, 4, "__")
-            Next
-             Application.StatusBar = strFileName & " - FMCS¿ë Data ÀÔ·Â " & "(" & i & "of" & no & ")"
-            '// Sbnm ÀÔ·Â
-            rng.Offset(0, -7).Value = "AG"
-        
-            '// Area ÀÔ·Â
-            rng.Offset(0, -6).Value = splice(strFileName, 2, "__")
+
+       
+             Application.StatusBar = strFileName & " - FMCSìš© Data ìž…ë ¥ " & "(" & i & "of" & no & ")"
+            '// í•´ë‹¹í•˜ëŠ” ìœ„ì¹˜ì— ë³µì‚¬/ë¶™ì—¬ë„£ê¸° ì‹¤ì‹œ 
+            '// Lineìž…ë ¥
             
-            '// Book ÀÔ·Â
-            rng.Offset(0, -5).Value = splice(strFileName, 3, "__")
-            
-            '// Dwg ÀÔ·Â
-            strDwg = splice(strFileName, 4, "__") '// ÆÄÀÏ¸í¿¡¼­ Splicing
-            strDwg = splice(strDwg, 6, "-") '// ÆÄÀÏ¸í¿¡¼­ Splicing
-            strDwg = splice(strDwg, 1, "__") '// ÆÄÀÏ¸í¿¡¼­ Splicing
-            rng.Offset(0, -4).Value = strDwg
-            '// Fluid ÀÔ·Â
-            rng.Offset(0, -3).Value = splice(strFileName, 3, "__")
-            
-            '// LineÀÔ·Â
-            rng.Offset(0, -2).Value = splice(strFileName, 3, "__") & "-" & strDwg
-            
-            Application.StatusBar = strFileName & " - ÀÔ·Â ¿Ï·á " & "(" & i & "of" & no & ")"
+            'Status Bar ì‚¬ìš© 
+            Application.StatusBar = strFileName & " - ìž…ë ¥ ì™„ë£Œ " & "(" & i & "of" & no & ")"
             
             wb.Close False
             i = i + 1
@@ -209,11 +175,11 @@ Else
     
 End If
 
-'//ÀÛ¾÷ ¿Ï·á ÈÄ Message Ãâ·Â ¹× Á¾·á
+'//ìž‘ì—… ì™„ë£Œ í›„ Message ì¶œë ¥ ë° ì¢…ë£Œ
 Application.StatusBar = False
 finishTime = Timer
-MsgBox "ÃÑ " & no & "°³ Merge ¿Ï·á" & Chr(13) & Chr(10) & "¼Ò¿ä½Ã°£ : " & finishTime - startTime & "sec"
-wbTemp.SaveAs "C:\WeldPlanMergeExport" & "\" & strSaveAs
+MsgBox "ì´ " & no & "ê°œ Merge ì™„ë£Œ" & Chr(13) & Chr(10) & "ì†Œìš”ì‹œê°„ : " & finishTime - startTime & "sec"
+wbTemp.SaveAs "C:\Export" & "\" & strSaveAs
 End Sub
 
 
